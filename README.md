@@ -1,7 +1,6 @@
 Ansible Role: Aerospike
 =========
-
-[![Build Status](https://travis-ci.org/mplachter/ansible-role-aerospike.svg?branch=master)](https://travis-ci.org/mplachter/ansible-role-aerospike)
+[![Ansible Role](https://img.shields.io/ansible/role/19856.svg)](https://galaxy.ansible.com/mplachter/aerospike/) [![Build Status](https://travis-ci.org/mplachter/ansible-role-aerospike.svg?branch=master)](https://travis-ci.org/mplachter/ansible-role-aerospike)
 
 Ansible role to install and configure [Aerospike](http://www.aerospike.com/) on CentOS (6/7) and Debian (Jessie\Wheezy) Linux.
 
