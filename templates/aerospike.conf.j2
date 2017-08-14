@@ -1,5 +1,6 @@
 #jinja2: lstrip_blocks: True
 # Aerospike database configuration file.
+# {{ ansible_managed }}
 
 service {
         user root
@@ -12,14 +13,12 @@ service {
         proto-fd-max {{ aerospike_proto_fd_max | default(15000) }}
         proto-fd-idle-ms {{ aerospike_proto_fd_idle_ms | default(60000) }}
 }
-
 logging {
         # Log file must be an absolute path.
         file {{ aerospike_log_directory }}/aerospike.log {
                 context any info
         }
 }
-
 network {
         service {
                 address any
@@ -55,7 +54,6 @@ network {
                 port 3003
         }
 }
-
 {% for namespace in aerospike_namespaces %}
 namespace {{ namespace.name }} {
         replication-factor {{ namespace.replication_factor | default(2) }}
@@ -64,7 +62,7 @@ namespace {{ namespace.name }} {
     {% endif  %}
         high-water-memory-pct {{ namespace.high_water_memory_pct | default(70) }}
         high-water-disk-pct {{ namespace.high_water_disk_pct | default(60) }}
-        default-ttl {{ namespace.default_ttl | default(4) }}d # 30 days, use 0 to never expire/evict.
+        default-ttl {{ namespace.storage_ttl | default(4) }}d # 30 days, use 0 to never expire/evict.
 
     {% if namespace.storage_engine is defined %}
         storage-engine device {
@@ -100,4 +98,5 @@ namespace {{ namespace.name }} {
     {% else %}
         storage-engine memory
     {% endif %}
-}{% endfor %}
+}
+{% endfor %}

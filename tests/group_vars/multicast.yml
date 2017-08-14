@@ -23,8 +23,19 @@ aerospike_multicast_port: 9917
 
 ## Namespace configuration Vars
 aerospike_namespaces:
-  - name: default
-    high_water_memory_pct: 70
-    high_water_disk_pct: 60
-    default_ttl: 4
-    replication_factor: 2
+  - name: default1
+    memory_size: 1G
+  - name: default2
+    memory_size: 1G
+    storage_engine:
+      files:
+        - /opt/aerospike/data/file1
+      data_in_memory: true
+  - name: default3
+    storage_engine:
+      files:
+        - /opt/aerospike/data/file2
+      scheduler_mode: noop
+      write_block_size: 128K
+      data_in_memory: false
+    storage_ttl: 30
