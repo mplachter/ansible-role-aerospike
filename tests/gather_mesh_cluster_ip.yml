@@ -1,0 +1,28 @@
+---
+- hosts: mesh_cluster
+  become: false
+  pre_tasks:
+    - name: "Get ip docker-centos7-aerospike-00"
+      local_action: shell docker inspect --format \{\{.NetworkSettings.IPAddress\}\} docker-centos7-aerospike-clust-00
+      register: node_ip_1
+      changed_when: False
+    - name: "Get ip docker-centos7-aerospike-01"
+      local_action: shell docker inspect --format \{\{.NetworkSettings.IPAddress\}\}  docker-centos7-aerospike-clust-01
+      register: node_ip_2
+      changed_when: False
+    - name: "Get ip docker-centos7-aerospike-02"
+      local_action: shell docker inspect --format \{\{.NetworkSettings.IPAddress\}\}  docker-centos7-aerospike-clust-02
+      register: node_ip_3
+      changed_when: False
+    - name: "Set fact node_ip_1"
+      set_fact:
+          node_ip: "{{ node_ip_1.stdout }}"
+      when: inventory_hostname  == 'docker-centos7-aerospike-clust-00'
+    - name: "Set fact node_ip_2"
+      set_fact:
+          node_ip: "{{ node_ip_2.stdout }}"
+      when: inventory_hostname  == 'docker-centos7-aerospike-clust-01'
+    - name: "Set fact node_ip_3"
+      set_fact:
+          node_ip: "{{ node_ip_3.stdout }}"
+      when: inventory_hostname  == 'docker-centos7-aerospike-clust-02'

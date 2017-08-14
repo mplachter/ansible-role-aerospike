@@ -1,0 +1,56 @@
+---
+- name: Include Distro Specific Vars
+  include_vars: "{{ ansible_os_family }}{{ ansible_distribution_major_version }}.yml"
+
+- name: Create Aerospike download directory.
+  file:
+    path: "{{ aerospike_source_directory }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Create Aerospike log directory.
+  file:
+    path: "{{ aerospike_log_directory }}"
+    state: directory
+
+## Aerospike site does not have SSL
+- name: Download Aerospike package.
+  unarchive:
+    src: "{{ aerospike_download_url }}"
+    dest: "{{ aerospike_source_directory }}"
+    remote_src: True
+    validate_certs: no
+
+- name: Install Aerospike package from rpm.
+  yum:
+    name: "{{ aerospike_source_directory }}/{{ aerospike_package_name }}/{{ item }}"
+    state: present
+  with_items:
+    - "{{ aerospike_rpm_name }}"
+    - "{{ aerospike_tools_rpm_name }}"
+  notify:
+    - start aerospike
+  when: ansible_os_family == 'RedHat'
+
+- name: Install Aerospike package from deb.
+  apt:
+    deb: "{{ aerospike_source_directory }}/{{ aerospike_package_name }}/{{ item }}"
+    install_recommends: yes
+  with_items:
+    - "{{ aerospike_deb_name }}"
+    - "{{ aerospike_tools_deb_name }}"
+  notify:
+    - start aerospike
+  when: ansible_os_family == 'Debian'
+
+- name: Place Aerospike configuration file.
+  template:
+    src: aerospike.conf.j2
+    dest: "{{ aerospike_config_destination }}"
+    owner: root
+    group: root
+    force: yes
+  notify:
+    - start aerospike

@@ -1,0 +1,5 @@
+---
+aerospike_download_url:
+  https://www.aerospike.com/download/server/{{ aerospike_version }}/artifact/{{ aerospike_distro_download }}
+aerospike_package_name:
+  aerospike-server-community-{{ aerospike_version }}-{{ aerospike_distro_download }}

@@ -1,0 +1,5 @@
+---
+- hosts: all
+
+- include: gather_mesh_cluster_ip.yml
+- include: role.yml

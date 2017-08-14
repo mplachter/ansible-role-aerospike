@@ -1,0 +1,30 @@
+---
+# Download and Service Vars
+aerospike_boot_enabled: true
+aerospike_version: 3.14.1.1
+aerospike_tools_version: 3.13.0.1
+aerospike_source_directory: /usr/local/src
+aerospike_log_location: /var/log/aerospike/aerospike.log
+
+# Aerospike configuration Vars
+aerospike_cluster_size: 1
+aerospike_service_threads: 4
+aerospike_transaction_queues: 4
+aerospike_transaction_threads: 4
+aerospike_proto_fd_max: 15000
+aerospike_proto_fd_idle_ms: 60000
+aerospike_heartbeat_interval: 250
+aerospike_heartbeat_timeout: 10
+
+## Heartbeat configuration Vars
+aerospike_multicast_group: 239.1.99.2
+aerospike_multicast_port: 9917
+
+
+## Namespace configuration Vars
+aerospike_namespaces:
+  - name: default
+    high_water_memory_pct: 70
+    high_water_disk_pct: 60
+    default_ttl: 4
+    replication_factor: 2

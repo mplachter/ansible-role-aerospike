@@ -1,0 +1,114 @@
+---
+dependency:
+  name: galaxy
+ansible:
+  verbose: False
+  playbook: tests/test.yml
+driver:
+  name: vagrant
+  name: docker
+docker:
+  containers:
+    - name: docker-centos7-aerospike-clust-00
+      ansible_groups:
+        - aerospike
+        - mesh_cluster
+      hostname: docker-centos7-aerospike-clust-00
+      image: mplachter/docker-centos7-molecule
+      image_version: latest
+      privileged: True
+      cap_add:
+        - SYS_ADMIN
+      volume:
+        - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+      command: "/usr/sbin/init"
+      port_bindings:
+        3000: 3000
+    - name: docker-centos7-aerospike-clust-01
+      ansible_groups:
+        - aerospike
+        - mesh_cluster
+      hostname: docker-centos7-aerospike-clust-01
+      image: mplachter/docker-centos7-molecule
+      image_version: latest
+      privileged: True
+      cap_add:
+        - SYS_ADMIN
+      volume:
+        - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+      command: "/usr/sbin/init"
+      port_bindings:
+        3000: 3001
+    - name: docker-centos7-aerospike-clust-02
+      ansible_groups:
+        - aerospike
+        - mesh_cluster
+      hostname: docker-centos7-aerospike-clust-02
+      image: mplachter/docker-centos7-molecule
+      image_version: latest
+      privileged: True
+      cap_add:
+        - SYS_ADMIN
+      volume:
+        - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+      command: "/usr/sbin/init"
+      port_bindings:
+        3000: 3002
+    - name: docker-centos6-aerospike-multi
+      ansible_groups:
+        - aerospike
+        - multicast
+      hostname: docker-centos6-aerospike-multi
+      image: mplachter/docker-centos6-molecule
+      image_version: latest
+      privileged: True
+      cap_add:
+        - SYS_ADMIN
+      volume:
+        - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+      port_bindings:
+        3000: 4000
+    - name: docker-debian7-aerospike
+      ansible_groups:
+        - aerospike
+      hostname: docker-debian7-aerospike
+      image: mplachter/docker-debian7-molecule
+      image_version: latest
+      privileged: True
+      cap_add:
+        - SYS_ADMIN
+      volume:
+        - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+      port_bindings:
+        3000: 4001
+    - name: docker-debian8-aerospike
+      ansible_groups:
+        - aerospike
+      hostname: docker-debian8-aerospike
+      image: mplachter/docker-debian8-molecule
+      image_version: latest
+      privileged: True
+      cap_add:
+        - SYS_ADMIN
+      volume:
+        - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+      port_bindings:
+        3000: 4002
+vagrant:
+  platforms:
+    - name: debian/wheezy64
+      box: debian/wheezy64
+  providers:
+    - name: virtualbox
+      type: virtualbox
+      options:
+        memory: 512
+        cpus: 2
+  instances:
+    - name: vagrant-debian7-aerospike
+      ansible_groups:
+        - aerospike
+verifier:
+  name: testinfra
+  options:
+      verbose: true

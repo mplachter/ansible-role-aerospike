@@ -1,0 +1,7 @@
+---
+aerospike_distro_download: el7
+aerospike_config_destination: /etc/aerospike/aerospike.conf
+aerospike_rpm_name:
+  aerospike-server-community-{{ aerospike_version }}-1.{{ aerospike_distro_download }}.x86_64.rpm
+aerospike_tools_rpm_name:
+  aerospike-tools-{{ aerospike_tools_version }}-1.{{ aerospike_distro_download }}.x86_64.rpm

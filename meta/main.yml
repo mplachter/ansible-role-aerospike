@@ -1,0 +1,21 @@
+galaxy_info:
+  author: Matt Plachter
+  description: Ansible role to install and configure Aerospike on CentOS (6/7) and Debian (Jessie/Wheezy) Linux.
+  license: MIT
+  min_ansible_version: 2.3
+  platforms:
+  - name: EL
+    versions:
+    - 6
+    - 7
+  - name: Debian
+    versions:
+    - jessie
+    - wheezy
+  - name: Amazon
+    versions:
+    - all
+  galaxy_tags:
+  - centos
+  - database
+  - aerospike
