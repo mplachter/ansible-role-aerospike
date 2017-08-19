@@ -5,7 +5,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     '.molecule/ansible_inventory').get_hosts('all')
 
 
-def test_verify_conf_file(File, Command):
+def test_verify_conf_file(File):
     c_file = File('/etc/aerospike/aerospike.conf')
     assert c_file.exists
     assert c_file.user == 'root'
@@ -18,9 +18,9 @@ def test_verify_log_file(File):
 
 
 def test_aerospike_service(Service):
-    s = Service("aerospike")
-    assert s.is_running
-    assert s.is_enabled
+    c_service = Service("aerospike")
+    assert c_service.is_running
+    assert c_service.is_enabled
 
 
 def test_aerospike_cluster_size(Command):
@@ -51,8 +51,8 @@ def test_aerospike_listening_ports(Command, nodename, local_address):
     ("aerospike", "transaction-threads-per-queue 4"),
     ("aerospike", "proto-fd-max 15000"),
     ("aerospike", "proto-fd-idle-ms 60000"),
-    ("aerospike", "high-water-memory-pct 70"),
-    ("aerospike", "high-water-disk-pct 60"),
+    ("aerospike", "high-water-memory-pct 60"),
+    ("aerospike", "high-water-disk-pct 50"),
     ("aerospike", "default-ttl 4d"),
     ("aerospike", "replication-factor 2"),
     ("aerospike", "interval 250"),
@@ -67,6 +67,8 @@ def test_aerospike_listening_ports(Command, nodename, local_address):
     ("aerospike-multi", "write-block-size 128K"),
     ("aerospike-multi", "mode multicast"),
     ("aerospike-multi", "port 9917"),
+    ("aerospike-multi", "filesize 2G"),
+    ("aerospike-multi", "default-ttl 30D"),
     ("aerospike-multi", "multicast-group 239.1.99.2"),
     ("aerospike-clust", "mode mesh"),
     ("aerospike-clust", "port 3002 # Heartbeat port for this node."),
@@ -77,3 +79,9 @@ def test_aerospike_config(File, Command, teststring, nodename):
     c_file = File('/etc/aerospike/aerospike.conf')
     if nodename in Command("hostname").stdout:
         assert c_file.contains(teststring)
+
+
+def test_aerospike_access_port(File, Command):
+    ip_address = Command("hostname -I").stdout
+    c_file = File('/etc/aerospike/aerospike.conf')
+    assert c_file.contains("access-address " + ip_address)

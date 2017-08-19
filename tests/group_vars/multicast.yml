@@ -24,9 +24,9 @@ aerospike_multicast_port: 9917
 ## Namespace configuration Vars
 aerospike_namespaces:
   - name: default1
-    memory_size: 1G
+    memory_size: 1
   - name: default2
-    memory_size: 1G
+    memory_size: 1
     storage_engine:
       files:
         - /opt/aerospike/data/file1
@@ -35,6 +35,7 @@ aerospike_namespaces:
     storage_engine:
       files:
         - /opt/aerospike/data/file2
+      filesize: 2
       scheduler_mode: noop
       write_block_size: 128K
       data_in_memory: false

@@ -26,7 +26,7 @@ aerospike_mesh_seed_addresses:
 ## Namespace configuration Vars
 aerospike_namespaces:
   - name: default
-    high_water_memory_pct: 70
-    high_water_disk_pct: 60
+    high_water_memory_pct: 60
+    high_water_disk_pct: 50
     storage_ttl: 4
     replication_factor: 2

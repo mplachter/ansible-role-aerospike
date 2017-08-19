@@ -22,6 +22,9 @@ logging {
 network {
         service {
                 address any
+    {% if aerospike_access_address is defined %}
+                access-address {{ aerospike_access_address }}
+    {% endif %}
                 port 3000
         }
 
@@ -58,10 +61,10 @@ network {
 namespace {{ namespace.name }} {
         replication-factor {{ namespace.replication_factor | default(2) }}
     {% if namespace.memory_size is defined %}
-        memory-size {{ namespace.memory_size }}
+        memory-size {{ namespace.memory_size }}G
     {% endif  %}
-        high-water-memory-pct {{ namespace.high_water_memory_pct | default(70) }}
-        high-water-disk-pct {{ namespace.high_water_disk_pct | default(60) }}
+        high-water-memory-pct {{ namespace.high_water_memory_pct | default(60) }}
+        high-water-disk-pct {{ namespace.high_water_disk_pct | default(50) }}
         default-ttl {{ namespace.storage_ttl | default(4) }}d # 30 days, use 0 to never expire/evict.
 
     {% if namespace.storage_engine is defined %}
@@ -75,12 +78,10 @@ namespace {{ namespace.name }} {
             {% for file in namespace.storage_engine.files %}
                 file {{ file }}
             {% endfor %}
-        {% endif %}
         {% if namespace.storage_engine.filesize is defined %}
-                filesize {{ namespace.storage_engine.filesize }}
+                filesize {{ namespace.storage_engine.filesize }}G
         {% endif %}
-
-                # The 2 lines below optimize for SSD.
+        {% endif %}
         {% if namespace.storage_engine.scheduler_mode is defined %}
                 scheduler-mode {{ namespace.storage_engine.scheduler_mode }}
         {% endif %}
@@ -88,7 +89,6 @@ namespace {{ namespace.name }} {
                 write-block-size {{ namespace.storage_engine.write_block_size }}
         {% endif %}
 
-                # Use the line below to store data in memory in addition to devices.
         {% if namespace.storage_engine.data_in_memory is defined %}
                 data-in-memory {{ namespace.storage_engine.data_in_memory | lower }}
         {% else %}
