@@ -24,41 +24,11 @@ docker:
       command: "/usr/sbin/init"
       port_bindings:
         3000: 3000
-    - name: docker-centos7-aerospike-clust-01
+    - name: docker-centos6-aerospike-clust-01
       ansible_groups:
         - aerospike
         - mesh_cluster
-      hostname: docker-centos7-aerospike-clust-01
-      image: mplachter/docker-centos7-molecule
-      image_version: latest
-      privileged: True
-      cap_add:
-        - SYS_ADMIN
-      volume:
-        - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
-      command: "/usr/sbin/init"
-      port_bindings:
-        3000: 3001
-    - name: docker-centos7-aerospike-clust-02
-      ansible_groups:
-        - aerospike
-        - mesh_cluster
-      hostname: docker-centos7-aerospike-clust-02
-      image: mplachter/docker-centos7-molecule
-      image_version: latest
-      privileged: True
-      cap_add:
-        - SYS_ADMIN
-      volume:
-        - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
-      command: "/usr/sbin/init"
-      port_bindings:
-        3000: 3002
-    - name: docker-centos6-aerospike-multi
-      ansible_groups:
-        - aerospike
-        - multicast
-      hostname: docker-centos6-aerospike-multi
+      hostname: docker-centos6-aerospike-clust-01
       image: mplachter/docker-centos6-molecule
       image_version: latest
       privileged: True
@@ -67,11 +37,12 @@ docker:
       volume:
         - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
       port_bindings:
-        3000: 4000
-    - name: docker-debian7-aerospike
+        3000: 3001
+    - name: docker-debian7-aerospike-clust-02
       ansible_groups:
         - aerospike
-      hostname: docker-debian7-aerospike
+        - mesh_cluster
+      hostname: docker-debian7-aerospike-clust-02
       image: mplachter/docker-debian7-molecule
       image_version: latest
       privileged: True
@@ -80,11 +51,12 @@ docker:
       volume:
         - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
       port_bindings:
-        3000: 4001
-    - name: docker-debian8-aerospike
+        3000: 3002
+    - name: docker-debian8-aerospike-multi
       ansible_groups:
         - aerospike
-      hostname: docker-debian8-aerospike
+        - multicast
+      hostname: docker-debian8-aerospike-multi
       image: mplachter/docker-debian8-molecule
       image_version: latest
       privileged: True
@@ -93,7 +65,7 @@ docker:
       volume:
         - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
       port_bindings:
-        3000: 4002
+        3000: 3003
 vagrant:
   platforms:
     - name: debian/wheezy64

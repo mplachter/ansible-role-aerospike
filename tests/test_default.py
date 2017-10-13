@@ -27,6 +27,9 @@ def test_aerospike_cluster_size(Command):
     if 'aerospike-clust' in Command("hostname").stdout:
         cluster_size = Command("asinfo -v statistics").stdout
         assert 'cluster_size=3' in cluster_size
+    elif 'localhost.localdomain' in Command("hostname").stdout:
+        cluster_size = Command("asinfo -v statistics").stdout
+        assert 'cluster_size=3' in cluster_size
     else:
         cluster_size = Command("asinfo -v statistics").stdout
         assert 'cluster_size=1' in cluster_size
@@ -68,7 +71,7 @@ def test_aerospike_listening_ports(Command, nodename, local_address):
     ("aerospike-multi", "mode multicast"),
     ("aerospike-multi", "port 9917"),
     ("aerospike-multi", "filesize 2G"),
-    ("aerospike-multi", "default-ttl 30D"),
+    ("aerospike-multi", "default-ttl 30d"),
     ("aerospike-multi", "multicast-group 239.1.99.2"),
     ("aerospike-clust", "mode mesh"),
     ("aerospike-clust", "port 3002 # Heartbeat port for this node."),
