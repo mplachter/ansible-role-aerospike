@@ -23,24 +23,36 @@
     remote_src: True
     validate_certs: no
 
+- name: Get Names of Aerospike RPM Packages.
+  find:
+    paths: "{{ aerospike_source_directory }}/{{ aerospike_package_name }}"
+    patterns: "^(aerospike-(?:server|tools).+\\.rpm)$"
+    use_regex: true
+  register: aerospike_rpms
+
 - name: Install Aerospike package from rpm.
   yum:
-    name: "{{ aerospike_source_directory }}/{{ aerospike_package_name }}/{{ item }}"
+    name: "{{ item.path }}"
     state: present
   with_items:
-    - "{{ aerospike_rpm_name }}"
-    - "{{ aerospike_tools_rpm_name }}"
+    - "{{ aerospike_rpms.files }}"
   notify:
     - start aerospike
   when: ansible_os_family == 'RedHat'
 
+- name: Get Names of Aerospike RPM Packages.
+  find:
+    paths: "{{ aerospike_source_directory }}/{{ aerospike_package_name }}"
+    patterns: "^(aerospike-(?:server|tools).+\\.deb)$"
+    use_regex: true
+  register: aerospike_debs
+
 - name: Install Aerospike package from deb.
   apt:
-    deb: "{{ aerospike_source_directory }}/{{ aerospike_package_name }}/{{ item }}"
+    deb: "{{ item.path }}"
     install_recommends: yes
   with_items:
-    - "{{ aerospike_deb_name }}"
-    - "{{ aerospike_tools_deb_name }}"
+    - "{{ aerospike_debs.files }}"
   notify:
     - start aerospike
   when: ansible_os_family == 'Debian'

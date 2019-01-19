@@ -1,8 +1,7 @@
 ---
 # Download and Service Vars
 aerospike_boot_enabled: true
-aerospike_version: 3.14.1.1
-aerospike_tools_version: 3.13.0.1
+aerospike_version: 4.0.0.1
 aerospike_source_directory: /usr/local/src
 aerospike_log_directory: /var/log/aerospike
 

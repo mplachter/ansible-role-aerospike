@@ -1,8 +1,7 @@
 ---
 # Download and Service Vars
 aerospike_boot_enabled: true
-aerospike_version: 3.14.1.1
-aerospike_tools_version: 3.13.0.1
+aerospike_version: 4.0.0.1
 aerospike_source_directory: /usr/local/src
 aerospike_log_location: /var/log/aerospike/aerospike.log
 
@@ -25,13 +24,11 @@ aerospike_multicast_port: 9917
 aerospike_namespaces:
   - name: default1
     memory_size: 1
-  - name: default2
-    memory_size: 1
     storage_engine:
       files:
         - /opt/aerospike/data/file1
       data_in_memory: true
-  - name: default3
+  - name: default2
     storage_engine:
       files:
         - /opt/aerospike/data/file2

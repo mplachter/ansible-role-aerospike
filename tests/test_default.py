@@ -25,13 +25,13 @@ def test_aerospike_service(Service):
 
 def test_aerospike_cluster_size(Command):
     if 'aerospike-clust' in Command("hostname").stdout:
-        cluster_size = Command("asinfo -v statistics").stdout
+        cluster_size = Command("asinfo --no-config-file -v statistics").stdout
         assert 'cluster_size=3' in cluster_size
     elif 'localhost.localdomain' in Command("hostname").stdout:
-        cluster_size = Command("asinfo -v statistics").stdout
+        cluster_size = Command("asinfo --no-config-file -v statistics").stdout
         assert 'cluster_size=3' in cluster_size
     else:
-        cluster_size = Command("asinfo -v statistics").stdout
+        cluster_size = Command("asinfo --no-config-file -v statistics").stdout
         assert 'cluster_size=1' in cluster_size
 
 

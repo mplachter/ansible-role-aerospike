@@ -21,15 +21,14 @@ Available variables are listed below, along with default values (see defaults/ma
 
 Controls enabling Aerospike to start on boot.
 
-    aerospike_version: 3.14.1.1
-    aerospike_tools_version: 3.13.0.1
+    aerospike_version: 4.0.0.1
 
-Controls the version of Aerospike server and tools, respectively.
+Controls the version of Aerospike server.
 See [Aerospike releases](http://www.aerospike.com/download/server/notes.html) for complete list.
 
     aerospike_source_directory: /usr/local/src
 
-Controls the expected name of the unarchived Aerospike tools package.
+Controls the expected name of the unarchived Aerospike directory.
 
     aerospike_log_location: /var/log/aerospike
 
@@ -69,6 +68,8 @@ See [Aerospike namespace configuration](http://www.aerospike.com/docs/operations
 
 You can list multiple namespaces with file, memory, or device storage engines.
 
+**SINCE AEROSPIKE 4.0.0.1 ONLY *2 NAMESPACES* IN EACH CLUSTER**
+
     aerospike_namespaces:
       - name: device_objects
         memory_size: 8
@@ -87,6 +88,8 @@ You can list multiple namespaces with file, memory, or device storage engines.
        - name: memory_objects
 
 Above is an example of configuring 3 namespaces using attached devices, files, and memory. [Aerospike Storage Engines Docs](http://www.aerospike.com/docs/operations/configure/namespace/storage#comparing-storage-engines)
+
+**SINCE AEROSPIKE 4.0.0.1 ONLY *2 NAMESPACES* IN EACH CLUSTER**
 
     aerospike_service_threads: 4
 

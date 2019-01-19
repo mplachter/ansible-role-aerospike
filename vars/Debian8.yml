@@ -1,7 +1,3 @@
 ---
 aerospike_distro_download: debian8
 aerospike_config_destination: /etc/aerospike/aerospike.conf
-aerospike_deb_name:
-  aerospike-server-community-{{ aerospike_version }}.{{ aerospike_distro_download }}.x86_64.deb
-aerospike_tools_deb_name:
-  aerospike-tools-{{ aerospike_tools_version }}.{{ aerospike_distro_download }}.x86_64.deb

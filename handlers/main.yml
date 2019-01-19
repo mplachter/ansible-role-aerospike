@@ -21,7 +21,7 @@
   listen: start aerospike
 
 - name: Make Sure Cluster Memembership Is Correct
-  command: asinfo
+  command: asinfo --no-config-file
   register: asinfo_output
   until: asinfo_output.stdout.find("cluster_size={{ aerospike_cluster_size }}") != -1
   retries: 100
