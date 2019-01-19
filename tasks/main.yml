@@ -40,7 +40,7 @@
     - start aerospike
   when: ansible_os_family == 'RedHat'
 
-- name: Get Names of Aerospike RPM Packages.
+- name: Get Names of Aerospike DEB Packages.
   find:
     paths: "{{ aerospike_source_directory }}/{{ aerospike_package_name }}"
     patterns: "^(aerospike-(?:server|tools).+\\.deb)$"
